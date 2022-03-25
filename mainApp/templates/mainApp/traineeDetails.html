@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h1{
+            text-shadow: 2px 2px 4px #000;  
+        }
+        .head-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .myBtn {
+            margin: 30px;
+            margin-right: 100px;
+            padding: 10px;
+            background-color: blue;
+            color: white;
+        }
+
+        .logout-button {
+            display: inline;
+        }
+
+        .download-button {
+            display: inline;
+        }
+
+        .trainee-table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .trainee-table td,
+        .trainee-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .trainee-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .trainee-table tr:hover {
+            background-color: #ddd;
+        }
+
+        .trainee-table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        h2{
+            text-shadow: 2px 2px 4px #000;  
+        }
+    </style>
+    <title>Trainee Details</title>
+</head>
+
+<body style="background-color:lightblue;">
+    <div class="head-container">
+        <div class="details">
+            <h1>Trainee Details For Batch of : {{ fdata.date }}</h1>
+            <p><b><h2>{{ fdata.description }}</h2></b></p>
+            <br>
+        </div>
+        <div class="utility-buttons">
+            <div class="download-button">
+                <a href="{% url 'gcsv' %}"><button class="myBtn">Download</button></a>
+            </div>
+            <div class="logout-button">
+                <a href="{% url 'home' %}"><button class="myBtn">Back</button></a>
+            </div>
+        </div>
+
+    </div>
+    <div id='table'>
+        <table class='trainee-table'>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                    <th>College</th>
+                    <th>CGPA</th>
+                    <th>HSC</th>
+                    <th>SSC</th>
+                    <th>Domain</th>
+                    <th>Resume</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            {% for data in tdata %}
+            <tbody>
+                <tr>
+                    <td>{{ data.tname }}</td>
+                    <td>{{ data.temail }}</td>
+                    <td>{{ data.tage }}</td>
+                    <td>{{ data.tcollege }}</td>
+                    <td>{{ data.tcgpa }}</td>
+                    <td>{{ data.thsc }}</td>
+                    <td>{{ data.tssc }}</td>
+                    <td>{{ data.tdomain }}</td>
+                    {% if data.tresume == None%}
+                    <td></td>
+                    {% else %}
+                    <td><a href={{ data.tresume }}>Link</a></td>
+                    {% endif %}
+                    <td><a href="{% url 'delTrainee' data.temail %}">Del</a></td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+
+</html>
